@@ -19,6 +19,9 @@ You can easly serialize your classes with DataProviders and encrypt / decrypt wi
 - xxHash hashing;
 - MD5 hashing;
 
+## Installation
+Download and Import Latest *.unitypackage file from <a href="https://github.com/TinyPlay/USaveSerializer/releases">Releases Page</a>.
+
 ## Example
 ```csharp
 // Simple model for serialization / deserialization
@@ -44,13 +47,21 @@ public class MyPlayerController
     // Load Data
     public void LoadData()
     {
-        
+        JsonDataProvider<PlayerModel> modelProvider = new JsonDataProvider<PlayerModel>("path_to_model", Encoding.UTF8, new AES(new AES.EncodingOptions()
+        {
+            Password = "AESEncodingPassword"
+        }));
+        _playerData = modelProvider.LoadData();
     }
     
     // Save Data
     public void SaveData()
     {
-    
+         JsonDataProvider<PlayerModel> modelProvider = new JsonDataProvider<PlayerModel>("path_to_model", Encoding.UTF8, new AES(new AES.EncodingOptions()
+         {
+             Password = "AESEncodingPassword"
+         }));
+         modelProvider.SaveData((PlayerModel)_playerData);
     }
 }
 ```
